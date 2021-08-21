@@ -6,5 +6,5 @@ Alma Caribe, LLC is a private investment firm founded and led by Kediel O. Moral
 
 ### Contact
 
-Alma Caribe, LLC
-\newline info@almacaribe.co
+Alma Caribe, LLC\
+info@almacaribe.co
