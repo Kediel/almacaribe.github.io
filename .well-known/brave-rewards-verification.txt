@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: almacaribe.co
+Token: a8a676777ea0491dc617a01946574b65cc438cb183df270cde3cc072d7244dd3
