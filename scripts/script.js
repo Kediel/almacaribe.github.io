@@ -5,5 +5,5 @@ var d = new Date();
 
 // fade when scrolling
   $(window).scroll(function(){
-    $("#jumba").css("opacity", 1 - $(window).scrollTop() / 500);
+    $("#jumba").css("opacity", 1 - $(window).scrollTop() / 250);
   });
