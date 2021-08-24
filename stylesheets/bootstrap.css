@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 body {
@@ -17,4 +18,21 @@ footer {
 #jumba {
   background-image: url('https://wallpapercave.com/wp/wp2429575.jpg');
   height: 100vh;
+}
+
+#about {
+  padding-bottom: 10vw;
+}
+
+.col {
+  margin: auto;
+  width: 100%;
+  padding: 100px;
+
+}
+
+
+
+.snap {
+  scroll-snap-align: center;
 }
