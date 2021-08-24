@@ -7,6 +7,14 @@ body {
   font-family: "New York", serif;
 }
 
+a.contact {
+  color: white;
+
+}
+a.contact:hover {
+  color: grey;
+}
+
 footer {
   text-align: center;
 }
@@ -30,7 +38,6 @@ footer {
   padding: 100px;
 
 }
-
 
 
 .snap {
