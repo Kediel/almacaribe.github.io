@@ -1,5 +1,84 @@
-body {
-  margin: 0;
-  height: 100vh;
-  width: 100vw;
+// CSS
+@keyframes colored
+{
+    0% {color: #FFF;}
+    50% {color: #0F0;}
+    100% {color: #000;}    
 }
+
+@-moz-keyframes colored
+{
+    0% {color: #FFF;}
+    50% {color: #0F0;}
+    100% {color: #000;}    
+}
+
+@-o-keyframes colored
+{
+    0% {color: #FFF;}
+    50% {color: #0F0;}
+    100% {color: #000;}    
+}
+
+@-webkit-keyframes colored
+{
+    0% {color: #FFF;}
+    50% {color: #0F0;}
+    100% {color: #000;}    
+}
+
+.animated {
+    
+}
+
+body {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background-color: #000;
+    color: #000;
+    font-size: 1em;
+    font-family: Consolas, monospace;
+    overflow: hidden;
+}
+
+.column {
+    position: fixed;
+    width: 10px;
+    height: 100%;
+    oveflow: visible;
+}
+
+.cell {
+    width: 10px;
+    height: 18px;
+}
+
+.animated > .cell {
+	animation-name: colored;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+
+    -moz-animation-name: colored;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    
+    -o-animation-name: colored;
+    -o-animation-duration: 1s;
+    -o-animation-timing-function: linear;
+    
+    -webkit-animation-name: colored;
+    -webkit-animation-duration: 0.7s;
+    -webkit-animation-timing-function: linear;
+}
+
+.message {
+	position: fixed;
+	z-index: 10;
+}
+
+.shown {
+	color: #FFF;
+    background-color: #000;
+}
+
