@@ -1,39 +1,43 @@
-// Initialising the canvas
-var canvas = document.querySelector('canvas'),
-    ctx = canvas.getContext('2d');
+// Get the canvas node and the drawing context
+const canvas = document.getElementById('canv');
+const ctx = canvas.getContext('2d');
 
-// Setting the width and height of the canvas
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// set the width and height of the canvas
+const w = canvas.width = document.body.offsetWidth;
+const h = canvas.height = document.body.offsetHeight;
 
-// Setting up the letters
-var letters = 'ABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZABCDEFGHIJKLMNOPQRSTUVXYZ';
-letters = letters.split('');
+// draw a black rectangle of width and height same as that of the canvas
+ctx.fillStyle = '#000';
+ctx.fillRect(0, 0, w, h);
 
-// Setting up the columns
-var fontSize = 10,
-    columns = canvas.width / fontSize;
+const cols = Math.floor(w / 20) + 1;
+const ypos = Array(cols).fill(0);
 
-// Setting up the drops
-var drops = [];
-for (var i = 0; i < columns; i++) {
-  drops[i] = 1;
+function matrix () {
+  // Draw a semitransparent black rectangle on top of previous drawing
+  ctx.fillStyle = '#0001';
+  ctx.fillRect(0, 0, w, h);
+
+  // Set color to green and font to 15pt monospace in the drawing context
+  ctx.fillStyle = '#0f0';
+  ctx.font = '15pt monospace';
+
+  // for each column put a random character at the end
+  ypos.forEach((y, ind) => {
+    // generate a random character
+    const text = String.fromCharCode(Math.random() * 128);
+
+    // x coordinate of the column, y coordinate is already given
+    const x = ind * 20;
+    // render the character at (x, y)
+    ctx.fillText(text, x, y);
+
+    // randomly reset the end of the column if it's at least 100px high
+    if (y > 100 + Math.random() * 10000) ypos[ind] = 0;
+    // otherwise just move the y coordinate for the column 20px down,
+    else ypos[ind] = y + 20;
+  });
 }
 
-// Setting up the draw function
-function draw() {
-  ctx.fillStyle = 'rgba(0, 0, 0, .1)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  for (var i = 0; i < drops.length; i++) {
-    var text = letters[Math.floor(Math.random() * letters.length)];
-    ctx.fillStyle = '#0f0';
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-    drops[i]++;
-    if (drops[i] * fontSize > canvas.height && Math.random() > .95) {
-      drops[i] = 0;
-    }
-  }
-}
-
-// Loop the animation
-setInterval(draw, 33);
+// render the animation at 20 FPS.
+setInterval(matrix, 50);
