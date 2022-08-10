@@ -253,5 +253,28 @@
             
 		},
         timer = setInterval(startAnimation, 100);
-}("merry christmas"));
+}("K3MA5's Domain\n"
+  // Intro    
+  "Congratulations, you found my business profile!\n"
+  "Below you will find links to my GitHub, LinkedIn, and more so feel free to connect and review some of my work!\n"
+  // Biography
+  "Bio\n\n"
+  
+        "Kediel provides Cyber Security consulting services. \n"
+        "Passionate about how the world sees the security field and how vital it is to everyday company and personal operations.\n"
+        "I have a published paper in the Privacy domain found here:\n" 
+        "https://www.researchgate.net/publication/336184994_Because_I_was_told_so_much_Linguistic_Indicators_of_Mental_Health_Status_on_Twitter\n\n"
+  
+        "In my spare time I sail boats, try to surf, occasionally snowboard, carve around on my surf skate and participate in various cyber events.\n"
+        "I am currently also the owner of Alma Caribe, a private investment club.\n\n"
+
+        "I am a Drexel University Graduate and current NYU Cyber Fellow.\n"
+        "For a copy of my resume please inquire at chief1647@almacaribe.co or PM me on LinkedIn.\n\n"
+       
+        "Looking forward to connecting! Stay safe, healthy and take it easy!\n"
+
+   "Links\n\n"
+        "https://www.linkedin/in/kediel\n"
+        "https://github.com/Kediel\n"
+        "https://twitter.com/k3m85"));
 
