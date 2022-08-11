@@ -253,7 +253,8 @@
             
 		},
         timer = setInterval(startAnimation, 100);
-}("K3MA5's Domain\n"
+}("Merry Christmas!"));
+  /*"K3MA5's Domain\n"
   // Intro    
   "Congratulations, you found my business profile!\n"
   "Below you will find links to my GitHub, LinkedIn, and more so feel free to connect and review some of my work!\n"
@@ -276,5 +277,5 @@
    "Links\n\n"
         "https://www.linkedin/in/kediel\n"
         "https://github.com/Kediel\n"
-        "https://twitter.com/k3m85"));
+        "https://twitter.com/k3m85")); /*
 
