@@ -1,34 +1,34 @@
-// CSS
+/* CSS */
 @keyframes colored
 {
     0% {color: #FFF;}
     50% {color: #0F0;}
-    100% {color: #000;}    
+    100% {color: #000;}
 }
 
 @-moz-keyframes colored
 {
     0% {color: #FFF;}
     50% {color: #0F0;}
-    100% {color: #000;}    
+    100% {color: #000;}
 }
 
 @-o-keyframes colored
 {
     0% {color: #FFF;}
     50% {color: #0F0;}
-    100% {color: #000;}    
+    100% {color: #000;}
 }
 
 @-webkit-keyframes colored
 {
     0% {color: #FFF;}
     50% {color: #0F0;}
-    100% {color: #000;}    
+    100% {color: #000;}
 }
 
 .animated {
-    
+
 }
 
 body {
@@ -39,14 +39,19 @@ body {
     color: #FFF;
     font-size: 1em;
     font-family: Consolas, monospace;
-    overflow: hidden;
+    overflow: visible;
+}
+
+# bio {
+  z-index: 11;
 }
 
 .column {
     position: fixed;
     width: 10px;
     height: 100%;
-    oveflow: visible;
+    overflow: visible;
+    color: #000;
 }
 
 .cell {
@@ -62,11 +67,11 @@ body {
     -moz-animation-name: colored;
     -moz-animation-duration: 1s;
     -moz-animation-timing-function: linear;
-    
+
     -o-animation-name: colored;
     -o-animation-duration: 1s;
     -o-animation-timing-function: linear;
-    
+
     -webkit-animation-name: colored;
     -webkit-animation-duration: 0.7s;
     -webkit-animation-timing-function: linear;
@@ -74,11 +79,10 @@ body {
 
 .message {
 	position: fixed;
-	z-index: 10;
+	z-index: 1;
 }
 
 .shown {
 	color: #FFF;
     background-color: #000;
 }
-

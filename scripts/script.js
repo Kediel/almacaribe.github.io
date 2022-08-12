@@ -7,3 +7,5 @@ var d = new Date();
   $(window).scroll(function(){
     $("#jumba").css("opacity", 1 - $(window).scrollTop() / 500);
   });
+
+// Business Profile scripts
