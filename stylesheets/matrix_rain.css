@@ -42,16 +42,37 @@ body {
     overflow: visible;
 }
 
-# bio {
-  z-index: 11;
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: auto;
+}
+
+#bio {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: white;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
 }
 
 .column {
-    position: fixed;
+    position: absolute;
     width: 10px;
     height: 100%;
     overflow: visible;
     color: #000;
+    z-index: 1;
+    cursor: pointer;
 }
 
 .cell {
@@ -78,8 +99,14 @@ body {
 }
 
 .message {
-	position: fixed;
-	z-index: 1;
+	position: absolute;
+	z-index: 2;
+  color: #000;
+  cursor: pointer;
+}
+
+.message:hover {
+  color: #0F0;
 }
 
 .shown {
