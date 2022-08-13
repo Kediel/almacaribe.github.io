@@ -134,7 +134,7 @@
     };
 
     /**
-     * Remove column from dom;
+     * Remove column from dom
      */
     columnProto.destroy = function() {
         var me = this,
