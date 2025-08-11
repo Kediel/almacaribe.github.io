@@ -1,6 +1,6 @@
 <h2 align="center">
   <p>Company and Personal Portfolio built with Astro</p>
-  <a href="https://almcaribe.co/" target="_blank">https://almacaribe.co/</a>
+  <a href="https://almacaribe.co/" target="_blank">https://almacaribe.co/</a>
 </h2>
 
 <p align="center">
