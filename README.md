@@ -3,11 +3,6 @@
   <a href="https://almcaribe.co/" target="_blank">https://almacaribe.co/</a>
 </h2>
 
-<div align="center">
-  <img alt="Demo" src="./demo/demo.webp" />
-  <img alt="Demo" src="./demo/pagespeed-score.png" />
-</div>
-
 <p align="center">
 All original work and design go to Vadim Rusin for creating this template! <a href='https://astro.build/themes/details/black-minimalistic-theme/'></a>.
 </p>
