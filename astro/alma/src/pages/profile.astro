@@ -1,0 +1,175 @@
+---
+import Component from "../components/Component.astro";
+import Experience from "../components/experience/index.astro";
+import { EXPERIENCE } from "../data/experience";
+import { SOCIALS } from "../data/socials";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="KOM">
+  <div class="relative hero z-10">
+    <div
+      class="mx-auto min-h-screen max-w-screen-2xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0"
+    >
+      <div class="lg:flex lg:justify-between lg:gap-4">
+        <header
+          class="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24"
+        >
+          <div
+            class="flex lg:items-start gap-4 flex-col lg:flex-row items-center text-center lg:text-left"
+          >
+            <img src="/avatar.webp" alt="k3ma5" class="w-16 h-16" />
+            <div>
+              <a
+                href="/"
+                class="text-4xl lg:text-5xl block font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50"
+              >
+                <h1>k3ma5</h1>
+              </a>
+              <h2 class="mt-2 text-sm lg:text-lg font-medium text-neutral-400">
+                Experienced Cybersecurity Professional 
+              </h2>
+              <h2 class="mt-2 text-sm lg:text-lg font-medium text-neutral-400">
+                (C|EH, Sec+, Linux+) 
+              </h2>
+              
+
+              <a
+                data-ccursor
+                href="mailto:info@almacaribe.co"
+                class="inline-flex transition-all border-neutral-700 hover:border-opacity-0 border-opacity-50 shadow rounded-md border backdrop-blur-xl bg-neutral-400/10 px-3 py-2.5 items-center text-white font-semibold group p-2 text-sm gap-x-2 mt-4"
+              >
+                <span>Email me</span>
+                <sapn
+                  class="w-2 h-2 rounded-full bg-purple-800 duration-1000 animate-pulse"
+                >
+                </sapn>
+              </a>
+            </div>
+          </div>
+
+          {
+            SOCIALS.length && (
+              <ul
+                class="mt-8 flex items-center justify-center lg:justify-normal gap-x-5"
+                aria-label="Social media"
+              >
+                {SOCIALS.map((social) => (
+                  <li class="text-xs p-2 rounded" data-ccursor>
+                    <a
+                      class="block hover:text-slate-200"
+                      href={social.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label={`${social.name} (opens in a new tab)`}
+                    >
+                      <span class="sr-only">{social.name}</span>
+                      {<Component component={social.icon} />}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </header>
+
+        <main id="content" class="pt-24 lg:w-1/2 lg:py-24">
+          <section
+            id="about"
+            class="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+            aria-label="About me"
+          >
+            <div
+              class="sticky top-0 z-20 -mx-6 mb-4 w-screen px-6 py-3 backdrop-blur-lg md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"
+            >
+              <h2
+                class="text-sm font-bold uppercase tracking-widest text-neutral-200 lg:sr-only"
+              >
+                About
+              </h2>
+            </div>
+            <div>
+              <div class="mb-4 space-y-4">
+                <p>
+                  In my current role as a Cybersecurity Engineer at a Defense Firm.
+                  (Hybrid). I lead a small team of tactical developers for IAM, software assurance (GRC), Certificate Management, Network Device Integrity, and more. Checkout my Github for tech's I have working knowledge of!
+                  My expertise extends to integrating customer requirements with COTS cyber capabilities.
+                </p>
+
+                <p>
+                  Looking forward to continuous learning via continued research in many areas such as cybersecurity, LLMs, Sailing, Quantitative Finance and more. Stay safe, healthy and take it easy!
+                </p>
+              </div>
+            </div>
+          </section>
+          <section
+            id="experience"
+            class="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+            aria-label="Work experience"
+          >
+            <div
+              class="sticky top-0 z-20 -mx-6 mb-4 w-screen px-6 py-3 backdrop-blur-lg md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"
+            >
+              <h2
+                class="text-sm font-bold uppercase tracking-widest text-neutral-200 lg:sr-only"
+              >
+                Experience
+              </h2>
+            </div><div>
+              <ol class="group/list space-y-12">
+                {EXPERIENCE.map((experience) => <Experience {...experience} />)}
+              </ol>
+            </div>
+          </section>
+          <footer class="max-w-md pb-16 text-sm text-neutral-500 sm:pb-0">
+            <p>
+              Design from 
+              <a
+                href="https://astro.build/themes/details/black-minimalistic-theme/"
+                class="font-medium text-neutral-400 hover:text-red-300 focus-visible:text-red-300 hover:underline"
+                target="_blank"
+                rel="noreferrer">Template</a
+              >
+              and updated in
+              <a
+                href="https://www.sublimetext.com/"
+                class="font-medium text-neutral-400 hover:text-red-300 focus-visible:text-red-300 hover:underline"
+                target="_blank"
+                rel="noreferrer">SublimeText</a
+              >
+            </p>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center py-4 text-xs">
+    {new Date().getFullYear()} All rights reserved.
+  </footer>
+</Layout>
+
+<style scoped>
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .hero {
+    background-image: url(/pattern.svg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    overflow-y: visible;
+    overflow-x: clip;
+  }
+
+  /*
+  .hero {
+    animation: fadeIn 3s;
+  }
+   */
+</style>
