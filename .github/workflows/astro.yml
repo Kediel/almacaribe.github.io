@@ -60,6 +60,8 @@ jobs:
             exit 1
           fi
 
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -67,9 +69,6 @@ jobs:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           cache-dependency-path: pnpm-lock.yaml
-      
-      - name: Install pnpm
-        run: npm install -g pnpm
 
       - name: Setup github-pages    
         id: pages
@@ -85,7 +84,7 @@ jobs:
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
