@@ -6,4 +6,9 @@ import react from "@astrojs/react";
 export default defineConfig({
   site: 'https://almacaribe.co',
   integrations: [tailwind(), react()],
+  vite: {
+    optimizeDeps: {
+      exclude: ['framer-motion'],
+    },
+  },
 });
