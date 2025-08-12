@@ -25,7 +25,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  BUILD_PATH: "astro/alma" # default value when not using subfolders
+  BUILD_PATH: "astro/alma/" # default value when not using subfolders
 
 jobs:
   build:
@@ -83,7 +83,7 @@ jobs:
           ${{ steps.detect-package-manager.outputs.runner }} astro build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
-        working-directory: ${{ env.BUILD_PATH }}
+        working-directory: astro/alma/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

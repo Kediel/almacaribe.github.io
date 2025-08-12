@@ -29,7 +29,7 @@ body {
 
 const setStyles = () => {
   var styleSheet = document.createElement("style");
-  styleSheet.type = "text/css";
+  // styleSheet.type = "text/css"; // .type is Deprecated
   styleSheet.innerText = styles;
   document.head.appendChild(styleSheet);
 };
