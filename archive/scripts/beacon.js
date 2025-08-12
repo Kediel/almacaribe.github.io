@@ -1,7 +1,3 @@
-
-
-let result = navigator.sendBeacon(url, data);
-
 // URL to send the data to
 let url = '/api/my-endpoint';
 
