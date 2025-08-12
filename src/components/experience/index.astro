@@ -33,20 +33,20 @@ const { dates, title, company, companyUrl, description, technologies, logo } =
             <span
               class="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block"
             ></span>
-            <div class="flex gap-x-2 items-center">
+            <div class="flex gap-x-20 items-center">
               {
                 logo && (
                   <img
-                    class="w-8 h-8 rounded bg-neutral-400/10 "
+                    class="w-8 h-16 rounded bg-neutral-400/10 "
                     src={logo}
                     alt={`${company} logo`}
                   />
                 )
               }
               <span
-                >{title} ·
+                >{title}
                 <span class="inline-block">
-                  {company}
+                · {company}
                   <IconArrow />
                 </span>
               </span>
