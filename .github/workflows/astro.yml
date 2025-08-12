@@ -59,7 +59,7 @@ jobs:
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: ${{ env.BUILD_PATH }}/${{ steps.detect-package-manager.outputs.lockfile }}
+          cache-dependency-path: pnpm-lock.yaml
          
       - name: Setup github-pages    
         id: pages

@@ -1,6 +1,0 @@
-Contact: mailto:sec@almacaribe.co
-Encryption: https://services.google.com/corporate/publickey.txt
-Acknowledgments: N/A
-Policy: N/A
-Hiring: N/A
-Expires: 2030-04-01T00:00:00z
