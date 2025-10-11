@@ -19,7 +19,7 @@
     "@tsparticles/slim": "^3.7.1",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
-    "astro": "^5.1.7",
+    "astro": "^5.14.3",
     "autoprefixer": "^10.4.21",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.1",
