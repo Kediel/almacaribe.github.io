@@ -1,27 +1,108 @@
-# build output
+# ──────────────────────────────────────────────────────────────
+#   .gitignore – standard for an Astro (Node/React/Vue/etc.) app
+# ──────────────────────────────────────────────────────────────
+
+# ------------------------------------------------------------------
+#   Production build output
+# ------------------------------------------------------------------
 dist/
+.out/                 # If you ever use Vite’s preview output
+.next/                # (Next.js – safe to keep even if you don’t use it)
+.nuxt/                # (Nuxt – safe to keep even if you don’t use it)
 
-# generated types
-.astro/
+# ------------------------------------------------------------------
+#   Generated source files (Astro, TypeScript, etc.)
+# ------------------------------------------------------------------
+.astro/               # Astro type‑generation folder
+.types/               # Common place for generated TS types
+.cjs/                 # Some bundlers emit a `cjs/` folder
+.esm/                 # …or an `esm/` folder
 
-# dependencies
+# ------------------------------------------------------------------
+#   Dependency directories
+# ------------------------------------------------------------------
 node_modules/
+.pnp/                 # Yarn Plug’n’Play (if you ever enable it)
 
-# logs
+# ------------------------------------------------------------------
+#   Package‑manager lockfiles – **must be tracked!**
+# ------------------------------------------------------------------
+# If you use pnpm (recommended for monorepos)
+pnpm-lock.yaml
+# If you use Yarn
+yarn.lock
+# If you use Bun
+bun.lockb
+# If you use npm (npm ≥ 7 creates a lockfile automatically)
+package-lock.json
+
+# ------------------------------------------------------------------
+#   Log files & debugging artifacts
+# ------------------------------------------------------------------
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
+*.log                # generic logs that might appear
 
-# environment variables
+# ------------------------------------------------------------------
+#   Environment / configuration files (never commit secrets)
+# ------------------------------------------------------------------
 .env
-.env.production
+.env.*
+!.env.example        # keep a template file in the repo
+!.env.sample
 
-# macOS-specific files
+# ------------------------------------------------------------------
+#   OS‑specific junk
+# ------------------------------------------------------------------
 .DS_Store
-.vercel
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# package managers
-pnpm-lock.yaml
-yarn.lock
-bun.lockb
+# ------------------------------------------------------------------
+#   Editor / IDE files (optional: keep if you want to share workspace)
+# ------------------------------------------------------------------
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# ------------------------------------------------------------------
+#   CI / Deployment caches & metadata (usually safe to ignore)
+# ------------------------------------------------------------------
+.vercel/
+.vercel_build_output/
+.netlify/
+.serverless/
+.aws-sam/
+firebase-debug.log
+
+# ------------------------------------------------------------------
+#   Test coverage & temporary build caches
+# ------------------------------------------------------------------
+coverage/
+*.lcov
+.nyc_output/
+.jest/
+.tmp/
+.cache/
+.turbo/
+.turbopack/
+.eslintcache
+
+# ------------------------------------------------------------------
+#   Miscellaneous generated files
+# ------------------------------------------------------------------
+*.tsbuildinfo
+*.tscache
+*.rpt2_cache/
+*.rts2_cache/
+*.d.ts
+*.d.ts.map
