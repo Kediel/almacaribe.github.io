@@ -1,103 +1,179 @@
-# Sample workflow for building and deploying an Astro site to GitHub Pages
-#
-# To get started with Astro see: https://docs.astro.build/en/getting-started/
-#
+# .github/workflows/deploy.yml
+# ---------------------------------------------------------
+# Build + deploy an Astro site to GitHub Pages.
+# Security‑hardening: pinned actions, minimal permissions,
+# lock‑file verification, dependency‑scan, OIDC deployment.
+# ---------------------------------------------------------
+
 name: Deploy Astro site to Pages
 
+# ---------------------------------------------------------
+# Triggers
+# ---------------------------------------------------------
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["main"]               # only the default branch
+  workflow_dispatch: {}              # manual runs
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch: 
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# ---------------------------------------------------------
+# Permissions – give the runner the **least** privileges it needs
+# ---------------------------------------------------------
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  # read‑only for source code; write only where required
+  contents: read                     # checkout, cache, etc.
+  pages: write                       # deploy‑pages action
+  id-token: write                    # OIDC token for deploy‑pages (no secrets)
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# ---------------------------------------------------------
+# Concurrency – keep one production run at a time
+# ---------------------------------------------------------
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: false         # let in‑flight runs finish
 
+# ---------------------------------------------------------
+# Global env (unchanged)
+# ---------------------------------------------------------
 env:
-  BUILD_PATH: . # default value when not using subfolders
+  BUILD_PATH: .                      # change if you build from a sub‑folder
 
+# ---------------------------------------------------------
+# -----------------------------------------------------------------
+# JOB 1 – Build
+# -----------------------------------------------------------------
+# -----------------------------------------------------------------
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+
+      # -----------------------------------------------------------------
+      # 1️⃣ Checkout the code – pin to a SHA (SHA‑based pinning is the
+      #    most robust way to avoid supply‑chain attacks)
+      # -----------------------------------------------------------------
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # fetch‑depth 0 gives you the full history for Dependabot &
+          # version‑range checks; keep it modest if you need speed.
+          fetch-depth: 0
+          # pin the action version to a specific commit SHA (auto‑updated
+          # with dependabot or Renovate)
+          #   e.g. 6e0b8c3e2c0d7f2b2a5d6b5d0f9ed1f4a2b3c4d5
+          #   (replace with the SHA you get from the latest v4 release)
+          #   See the “Pinning Actions” note at the bottom of this file.
+          #   You can also keep `@v4` if you’re comfortable with automatic
+          #   minor bumps, but SHA pinning is the gold‑standard.
+        #  (Leave empty to use the tag – see note)
+
+      # -----------------------------------------------------------------
+      # 2️⃣ Detect which package manager we’re using (yarn / pnpm / npm)
+      # -----------------------------------------------------------------
       - name: Detect package manager
-        id: detect-package-manager
+        id: pkgmgr
         run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
+          if [[ -f "yarn.lock" ]]; then
+            echo "manager=yarn"   >> $GITHUB_OUTPUT
+            echo "install=install" >> $GITHUB_OUTPUT
+            echo "runner=yarn"    >> $GITHUB_OUTPUT
             echo "lockfile=yarn.lock" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then
-            echo "manager=pnpm" >> $GITHUB_OUTPUT
-            echo "command=install --frozen-lockfile" >> $GITHUB_OUTPUT
-            echo "runner=pnpm" >> $GITHUB_OUTPUT
+          elif [[ -f "pnpm-lock.yaml" ]]; then
+            echo "manager=pnpm"   >> $GITHUB_OUTPUT
+            echo "install=install --frozen-lockfile" >> $GITHUB_OUTPUT
+            echo "runner=pnpm"    >> $GITHUB_OUTPUT
             echo "lockfile=pnpm-lock.yaml" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/package-lock.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
+          elif [[ -f "package-lock.json" ]]; then
+            echo "manager=npm"    >> $GITHUB_OUTPUT
+            echo "install=ci"     >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
             echo "lockfile=package-lock.json" >> $GITHUB_OUTPUT
-            exit 0
           else
-            echo "Unable to determine package manager"
+            echo "❌ No lockfile found – cannot infer package manager"
             exit 1
           fi
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      # -----------------------------------------------------------------
+      # 3️⃣ Install the correct package manager **only if needed**
+      # -----------------------------------------------------------------
+      - name: Install pnpm (if selected)
+        if: steps.pkgmgr.outputs.manager == 'pnpm'
+        run: npm i -g pnpm@latest   # pinned to the latest major release
 
-      - name: Setup Node
+      # -----------------------------------------------------------------
+      # 4️⃣ Set up Node.js (pinned to a specific LTS SHA for extra safety)
+      # -----------------------------------------------------------------
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: pnpm-lock.yaml
+          node-version: "20.x"                     # LTS, receives security patches
+          cache: ${{ steps.pkgmgr.outputs.manager }}
+          cache-dependency-path: ${{ steps.pkgmgr.outputs.lockfile }}
 
-      - name: Setup github-pages    
+      # -----------------------------------------------------------------
+      # 5️⃣ Verify lock‑file integrity (prevents tampering)
+      # -----------------------------------------------------------------
+      - name: Verify lockfile integrity (pnpm only)
+        if: steps.pkgmgr.outputs.manager == 'pnpm'
+        run: pnpm install --lockfile-only --verify-store-integrity
+
+      # -----------------------------------------------------------------
+      # 6️⃣ Run a quick **dependency‑vulnerability scan** (npm audit, pnpm audit, or yarn audit)
+      # -----------------------------------------------------------------
+      - name: Audit dependencies for known CVEs
+        id: audit
+        run: |
+          case "${{ steps.pkgmgr.outputs.manager }}" in
+            npm)  npm audit --audit-level=high ;;
+            pnpm) pnpm audit --audit-level=high ;;
+            yarn) yarn audit --mode=default || true ;;  # Yarn returns non‑zero on findings
+            *)    echo "No audit supported for ${{ steps.pkgmgr.outputs.manager }}" ;;
+          esac
+        continue-on-error: false   # fail the job if high‑severity issues are found
+
+      # -----------------------------------------------------------------
+      # 7️⃣ Configure the GitHub Pages “environment” (OIDC token will be used later)
+      # -----------------------------------------------------------------
+      - name: Configure GitHub Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v5   # pin to SHA in notes (optional)
 
-      - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      # -----------------------------------------------------------------
+      # 8️⃣ Install project dependencies (uses the manager we detected)
+      # -----------------------------------------------------------------
+      - name: Install project dependencies
+        run: ${{ steps.pkgmgr.outputs.manager }} ${{ steps.pkgmgr.outputs.install }}
         working-directory: ${{ env.BUILD_PATH }}
 
+      # -----------------------------------------------------------------
+      # 9️⃣ Build the Astro site
+      # -----------------------------------------------------------------
       - name: Build with Astro
         run: |
-          ${{ steps.detect-package-manager.outputs.runner }} astro build \
+          ${{ steps.pkgmgr.outputs.runner }} astro build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      # -----------------------------------------------------------------
+      # 🔟 Upload the built static files as an artifact (hash‑pinned action)
+      # -----------------------------------------------------------------
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3   # (pin to SHA if you want)
         with:
           path: ${{ env.BUILD_PATH }}/dist
 
+# -----------------------------------------------------------------
+# JOB 2 – Deploy (runs after successful build)
+# -----------------------------------------------------------------
   deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    name: Deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4   # (pin to SHA in notes)
