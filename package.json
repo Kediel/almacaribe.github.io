@@ -14,21 +14,12 @@
     "@astrojs/check": "0.9.12",
     "@astrojs/react": "7.1.2",
     "@astrojs/tailwind": "^6.0.2",
-<<<<<<< HEAD
-    "@tsparticles/engine": "^3.7.1",
-    "@tsparticles/react": "^3.0.0",
-    "@tsparticles/slim": "^3.7.1",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
-    "autoprefixer": "^10.4.21",
-=======
     "@tsparticles/engine": "^4.3.1",
     "@tsparticles/slim": "^4.3.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "astro": "7.4.4",
     "autoprefixer": "^10.5.2",
->>>>>>> Maintenance
     "clsx": "^2.1.1",
     "express": "^5.2.1",
     "framer-motion": "^11.18.2",
@@ -41,16 +32,10 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "astro": "^6.1.4",
-    "prettier": "^3.4.2",
-    "prettier-plugin-astro": "^0.14.1"
-=======
     "@tsparticles/react": "^4.3.1",
     "prettier": "^3.9.4",
     "prettier-plugin-astro": "^0.14.1",
     "react-icons": "^5.7.0",
     "tsparticles": "^4.3.1"
->>>>>>> Maintenance
   }
 }

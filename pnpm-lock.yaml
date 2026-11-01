@@ -27,16 +27,11 @@ importers:
         specifier: ^19.2.17
         version: 19.2.17
       '@types/react-dom':
-<<<<<<< HEAD
-        specifier: ^19.1.7
-        version: 19.1.7(@types/react@19.1.10)
-=======
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.17)
       astro:
         specifier: 7.4.4
         version: 7.4.4(esbuild@0.28.1)(jiti@1.21.7)(yaml@2.9.0)
->>>>>>> Maintenance
       autoprefixer:
         specifier: ^10.5.2
         version: 10.5.2(postcss@8.5.16)
@@ -71,15 +66,9 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
     devDependencies:
-<<<<<<< HEAD
-      astro:
-        specifier: ^6.1.4
-        version: 6.1.4(@types/node@24.10.1)(jiti@1.21.7)(rollup@4.60.1)(typescript@5.9.2)(yaml@2.8.3)
-=======
       '@tsparticles/react':
         specifier: ^4.3.1
         version: 4.3.1(@tsparticles/engine@4.3.1)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
->>>>>>> Maintenance
       prettier:
         specifier: ^3.9.4
         version: 3.9.4
