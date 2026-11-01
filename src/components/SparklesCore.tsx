@@ -43,11 +43,12 @@ const SparklesCore = (props: ParticlesProps) => {
     } catch (error) {
       console.error("Failed to load particles plugins:", error);
     } finally {
-      setIsInitialized(true);
+      setInit(true);
     }
   };
   
   initPlugins();
+  }, []);
 
   const particlesLoaded = useCallback(async (container?: Container) => {
     if (container) {
@@ -59,7 +60,7 @@ const SparklesCore = (props: ParticlesProps) => {
         },
       });
     }
-  };
+  }, [controls, opacity]);
 
   return (
     <motion.div animate={controls} className={cn("opacity-0", className)}>
