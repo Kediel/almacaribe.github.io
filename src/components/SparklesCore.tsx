@@ -1,8 +1,7 @@
-import type { Container } from "@tsparticles/engine";
-import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { Particles } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import REACT, { useEffect, useState, useCallback } from "react";
 import { cn } from "../utils/cn";
 
 type ParticlesProps = {
@@ -31,18 +30,26 @@ const SparklesCore = (props: ParticlesProps) => {
     opacity,
   } = props;
 
+  // State to manage if the particle system has been successfully loaded/initialized.
   const [init, setInit] = useState(false);
   const controls = useAnimation();
 
   useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine);
-    }).then(() => {
-      setInit(true);
-    });
-  }, []);
+    // Load the plugin 
+  const initPlugins = async () => {
+    try {
+      await loadSlim({});
+      console.log("Sparkles plugin loaded successfully.");
+    } catch (error) {
+      console.error("Failed to load particles plugins:", error);
+    } finally {
+      setIsInitialized(true);
+    }
+  };
+  
+  initPlugins();
 
-  const particlesLoaded = async (container?: Container) => {
+  const particlesLoaded = useCallback(async (container?: Container) => {
     if (container) {
       controls.start({
         opacity: opacity || 1,
